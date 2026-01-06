@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Stable Diffusion Banana Image Generator 🍌🎨
 
-First, run the development server:
+Ứng dụng tạo ảnh từ văn bản (Text-to-Image) sử dụng **Stable Diffusion v1.5 chạy local**.  
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📁 Cấu trúc project
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+gemini-banana-generate-image
+│
+├── backend
+│   ├── models/
+│   │   └── models--sd-legacy--stable-diffusion-v1-5/
+│   ├── sd_server.py
+│
+├── frontend
+│   ├── src/
+│   ├── .next/
+│   ├── node_modules/
+│   ├── package.json
+│   ├── next.config.mjs
+│
+├── .gitignore
+├── README.md
+├── requirements.txt
+```
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🧠 Model sử dụng
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Stable Diffusion v1.5 (sd-legacy)**
+````
+## ⚙️ Yêu cầu hệ thống
 
-## Learn More
+### Backend
+- Python **>= 3.9**
+- RAM khuyến nghị: **8GB+**
+- Hỗ trợ **GPU (CUDA)** hoặc **CPU**
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend
+- Node.js **>= 18**
+- npm hoặc yarn
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Chạy Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Cài thư viện:
 
-## Deploy on Vercel
+```bash
+pip install -r requirements.txt
+````
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Chạy server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+CUDA_VISIBLE_DEVICES=4 python -m uvicorn sd_server:app --host 0.0.0.0 --port 8000
+```
+
+Backend chạy tại:
+
+```
+http://localhost:8000
+```
+---
+
+## 🌐 Chạy Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Truy cập:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🔄 Luồng hoạt động
+
+1. Người dùng nhập prompt trên giao diện
+2. Frontend gửi request đến backend
+3. Backend load Stable Diffusion từ local và sinh ảnh
+4. Ảnh được trả về và hiển thị trên frontend
+---
+
+## 📜 License
